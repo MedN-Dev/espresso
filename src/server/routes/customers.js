@@ -1,17 +1,16 @@
+const Express = require('express')
 const _ = require('lodash')
 const customers = require('../controllers/customers')
 const customersTrucks = require('../controllers/customers-trucks')
 const knex = require('../tools/knex')
 
-const router = require('express').Router()
+const router = Express.Router()
 router
   .delete('/:id', (req, res) => {
-    console.log('DELETE /api/customers/' + req.params.id)
     const id = parseInt(req.params.id)
     // TODO
   })
   .get('/company/:companyId', async (req, res) => {
-    console.log('GET    /api/customers/company/' + req.params.companyId)
     const companyId = parseInt(req.params.companyId)
     knex
       .transaction(async trx => {
@@ -28,7 +27,6 @@ router
       })
   })
   .patch('/:id', (req, res) => {
-    console.log('PATCH  /api/customers/' + req.params.id)
     const id = parseInt(req.params.id)
     const { account, address, code, name, phone, trucks } = req.body
     knex
@@ -78,7 +76,6 @@ router
       })
   })
   .post('/', (req, res) => {
-    console.log('POST   /api/customers/')
     const { account, address, code, companyId, name, phone, trucks } = req.body
     knex
       .transaction(async trx => {

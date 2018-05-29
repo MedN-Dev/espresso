@@ -145,6 +145,28 @@ export default {
         this.showFailure(this.$t('INPUT_INVALID'))
         console.log(`${err.name}: ${err.message}`)
       }
+    },
+
+    inputFilter (newFile, oldFile, prevent) {
+      if (newFile && !oldFile) {
+        if (!/\.(gif|jpg|jpeg|png|webp)$/i.test(newFile.name)) {
+          this.showFailure(this.$t('YOUR_CHOICE_IS_NOT_A_PICTURE'))
+          return prevent()
+        }
+      }
+      if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
+        newFile.url = ''
+        let URL = window.URL || window.webkitURL
+        if (URL && URL.createObjectURL) {
+          newFile.url = URL.createObjectURL(newFile.file)
+        }
+        this.$refs.upload.active = true
+      }
+    }
+  },
+  data () {
+    return {
+      files: []
     }
   }
 }

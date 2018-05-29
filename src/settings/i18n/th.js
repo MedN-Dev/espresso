@@ -30,5 +30,6 @@ export default {
   SETTING_COMPANY: 'ตั้งค่าบริษัท',
   STATEMENT: 'รายการเดินบัญชี',
   TAX_CODE: 'รหัสผู้เสียภาษี',
-  TRUCK: 'รถบรรทุกสินค้า'
+  TRUCK: 'รถบรรทุกสินค้า',
+  YOUR_CHOICE_IS_NOT_A_PICTURE: 'ตัวเลือกของคุณไม่ใช่รูปภาพ'
 }

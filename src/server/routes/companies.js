@@ -1,12 +1,12 @@
+const Express = require('express')
 const _ = require('lodash')
 const accountings = require('../controllers/accountings')
 const companies = require('../controllers/companies')
 const knex = require('../tools/knex')
 
-const router = require('express').Router()
+const router = Express.Router()
 router
   .delete('/:id', (req, res) => {
-    console.log('DELETE /api/companies/' + req.params.id)
     const id = parseInt(req.params.id)
     knex
       .transaction(async trx => {
@@ -51,7 +51,6 @@ router
       })
   })
   .get('/', async (req, res) => {
-    console.log('GET    /api/companies')
     knex
       .transaction(async trx => {
         const rows = await companies.get(trx)
@@ -67,7 +66,6 @@ router
       })
   })
   .get('/active', async (req, res) => {
-    console.log('GET    /api/companies/active')
     knex
       .transaction(async trx => {
         const row = await companies.getActive(trx)
@@ -86,7 +84,6 @@ router
       })
   })
   .patch('/:id', (req, res) => {
-    console.log('PATCH  /api/companies/' + req.params.id)
     const id = parseInt(req.params.id)
     const { address, code, name, phone, taxCode } = req.body
     knex
@@ -121,7 +118,6 @@ router
       })
   })
   .patch('/active/:id', (req, res) => {
-    console.log('PATCH  /api/companies/active/' + req.params.id)
     const id = parseInt(req.params.id)
     knex
       .transaction(async trx => {
@@ -148,7 +144,6 @@ router
       })
   })
   .post('/', (req, res) => {
-    console.log('POST   /api/companies/')
     const { address, code, name, phone, prototypeId, taxCode } = req.body
     knex
       .transaction(async trx => {

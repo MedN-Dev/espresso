@@ -1,10 +1,12 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const router = require('./router')
+const BodyParser = require('body-parser')
+const Express = require('express')
+const Morgan = require('morgan')
+const routes = require('./routes')
 
-const app = express()
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use('/', router)
+const app = Express()
+app.use(BodyParser.json())
+app.use(BodyParser.urlencoded({ extended: true }))
+app.use(Morgan('dev'))
+app.use('/', routes)
 
 module.exports = app

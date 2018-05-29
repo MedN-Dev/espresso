@@ -30,5 +30,6 @@ export default {
   SETTING_COMPANY: 'Company Setting',
   STATEMENT: 'Statement',
   TAX_CODE: 'Tax Code',
-  TRUCK: 'Truck'
+  TRUCK: 'Truck',
+  YOUR_CHOICE_IS_NOT_A_PICTURE: 'Your choice is not a picture'
 }

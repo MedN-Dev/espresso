@@ -1,11 +1,11 @@
+const Express = require('express')
 const _ = require('lodash')
 const accountings = require('../controllers/accountings')
 const knex = require('../tools/knex')
 
-const router = require('express').Router()
+const router = Express.Router()
 router
   .delete('/:id', (req, res) => {
-    console.log('DELETE /api/accountings/' + req.params.id)
     const id = parseInt(req.params.id)
     knex
       .transaction(async trx => {
@@ -35,7 +35,6 @@ router
       })
   })
   .get('/company/:companyId', async (req, res) => {
-    console.log('GET    /api/accountings/company/' + req.params.companyId)
     const companyId = parseInt(req.params.companyId)
     knex
       .transaction(async trx => {
@@ -55,7 +54,6 @@ router
       })
   })
   .patch('/:id', (req, res) => {
-    console.log('PATCH  /api/accountings/' + req.params.id)
     const id = parseInt(req.params.id)
     const { code, name } = req.body
     knex
@@ -84,7 +82,6 @@ router
       })
   })
   .post('/', (req, res) => {
-    console.log('POST   /api/accountings/')
     const { code, companyId, name } = req.body
     knex
       .transaction(async trx => {

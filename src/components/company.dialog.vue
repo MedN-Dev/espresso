@@ -20,13 +20,30 @@ v-dialog(v-model="value" max-width="580")
           align-center
           justify-center
         )
-          v-avatar(
-            :size="64"
-          )
+          v-avatar(:size="96")
             img(
-              src="/static/favico.png"
+              :src="files.length ? files[0].url : 'https://www.gravatar.com/avatar/default?s=200&r=pg&d=mm'"
               alt="avatar"
             )
+        v-flex(
+          xs12
+          sm12
+          md12
+          text-xs-center
+          layout
+          align-center
+          justify-center
+        )
+          file-upload(
+            v-model="files"
+            @input-filter="inputFilter"
+            accept="image/png,image/gif,image/jpeg,image/webp"
+            class="file-upload mt-2"
+            extensions="gif,jpg,jpeg,png,webp"
+            name="avatar"
+            post-action="/api/upload"
+            ref="upload"
+          ) Upload avatar
         v-text-field(
           v-model="code"
           :counter="structures.code.length"
@@ -78,5 +95,18 @@ v-dialog(v-model="value" max-width="580")
         )
           v-icon delete
 </template>
+<style lang="stylus" scoped>
+.example-avatar .drop-active {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: fixed;
+  z-index: 9999;
+  opacity: .6;
+  text-align: center;
+  background: #000;
+}
+</style>
 
 <script src="@/components/company.dialog.js"></script>

@@ -23,6 +23,10 @@ Vue.use(VueMq, {
     lg: Infinity
   }
 })
+
+const VueUploadComponent = require('vue-upload-component')
+Vue.component('file-upload', VueUploadComponent)
+
 Vue.config.productionTip = false
 Vue.mixin({
   computed: {
