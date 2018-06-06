@@ -28,6 +28,7 @@ export default PathMirror(
     setActiveByItem: null,
     setActiveByPath: null,
     setAddress: null,
+    setAvatar: null,
     setCode: null,
     setName: null,
     setPagination: null,

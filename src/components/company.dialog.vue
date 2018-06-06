@@ -20,30 +20,24 @@ v-dialog(v-model="value" max-width="580")
           align-center
           justify-center
         )
-          v-avatar(:size="96")
+          v-avatar(
+            v-if="avatar || preview"
+            @click="onAvatarReset"
+            :size="96"
+          )
             img(
-              :src="files.length ? files[0].url : 'https://www.gravatar.com/avatar/default?s=200&r=pg&d=mm'"
+              :src="avatar ? 'http://localhost:8080/api/images/' + avatar : preview"
               alt="avatar"
             )
-        v-flex(
-          xs12
-          sm12
-          md12
-          text-xs-center
-          layout
-          align-center
-          justify-center
-        )
-          file-upload(
-            v-model="files"
-            @input-filter="inputFilter"
-            accept="image/png,image/gif,image/jpeg,image/webp"
-            class="file-upload mt-2"
-            extensions="gif,jpg,jpeg,png,webp"
-            name="avatar"
-            post-action="/api/upload"
-            ref="upload"
-          ) Upload avatar
+          e-input-file(
+            v-show="!avatar && !preview"
+            v-model="upload"
+            @change="onFileChange"
+            @upload-success="onUploadSuccess"
+            name="image"
+            label="Drag your file here to begin or click to browse"
+            url="http://localhost:8080/api/upload"
+          )
         v-text-field(
           v-model="code"
           :counter="structures.code.length"
@@ -95,18 +89,5 @@ v-dialog(v-model="value" max-width="580")
         )
           v-icon delete
 </template>
-<style lang="stylus" scoped>
-.example-avatar .drop-active {
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  position: fixed;
-  z-index: 9999;
-  opacity: .6;
-  text-align: center;
-  background: #000;
-}
-</style>
 
 <script src="@/components/company.dialog.js"></script>

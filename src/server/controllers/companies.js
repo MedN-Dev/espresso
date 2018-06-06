@@ -32,7 +32,7 @@ const getActive = async trx => {
 }
 
 const getMin = async trx => {
-  let rows = await trx(tables.companies.name).min('id')
+  let rows = await trx(tables.companies.name).min({ id: 'id' })
   if (rows.length !== 1) {
     return
   }
@@ -43,10 +43,11 @@ const getMin = async trx => {
 const insert = async (trx, payload) => {
   if (Array.isArray(payload)) {
     const normalizedPayload = payload.map(item => {
-      const { active = 0, address, code, name, phone, taxCode } = item
+      const { address, avatar, code, name, phone, taxCode, active = 0 } = item
       return {
         [tables.companies.row.active]: active,
         [tables.companies.row.address]: address,
+        [tables.companies.row.avatar]: avatar,
         [tables.companies.row.code]: code,
         [tables.companies.row.name]: name,
         [tables.companies.row.phone]: phone,
@@ -56,10 +57,11 @@ const insert = async (trx, payload) => {
     const rows = await trx(tables.companies.name).insert(normalizedPayload)
     return rows[0]
   } else {
-    const { active = 0, address, code, name, phone, taxCode } = payload
+    const { address, avatar, code, name, phone, taxCode, active = 0 } = payload
     const normalizedPayload = {
       [tables.companies.row.active]: active,
       [tables.companies.row.address]: address,
+      [tables.companies.row.avatar]: avatar,
       [tables.companies.row.code]: code,
       [tables.companies.row.name]: name,
       [tables.companies.row.phone]: phone,
@@ -96,13 +98,18 @@ const setActive = async (trx, id) => {
   }
 }
 
-const update = async (trx, id, { address, code, name, phone, taxCode }) => {
+const update = async (
+  trx,
+  id,
+  { address, avatar, code, name, phone, taxCode }
+) => {
   const affected = await trx(tables.companies.name)
     .where({
       [tables.companies.row.id]: id
     })
     .update({
       [tables.companies.row.address]: address,
+      [tables.companies.row.avatar]: avatar,
       [tables.companies.row.code]: code,
       [tables.companies.row.name]: name,
       [tables.companies.row.phone]: phone,

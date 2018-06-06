@@ -85,11 +85,12 @@ router
   })
   .patch('/:id', (req, res) => {
     const id = parseInt(req.params.id)
-    const { address, code, name, phone, taxCode } = req.body
+    const { address, avatar, code, name, phone, taxCode } = req.body
     knex
       .transaction(async trx => {
         const affected = await companies.update(trx, id, {
           address,
+          avatar,
           code,
           name,
           phone,
@@ -144,12 +145,21 @@ router
       })
   })
   .post('/', (req, res) => {
-    const { address, code, name, phone, prototypeId, taxCode } = req.body
+    const {
+      address,
+      avatar,
+      code,
+      name,
+      phone,
+      prototypeId,
+      taxCode
+    } = req.body
     knex
       .transaction(async trx => {
         // #region insert companies
         const id = await companies.insert(trx, {
           address,
+          avatar,
           code,
           name,
           phone,

@@ -1,4 +1,5 @@
 const Express = require('express')
+const Path = require('path')
 const accountings = require('./accountings')
 const companies = require('./companies')
 const customers = require('./customers')
@@ -9,6 +10,10 @@ router.use('/api/accountings', accountings)
 router.use('/api/companies', companies)
 router.use('/api/customers', customers)
 router.use('/api/upload', upload)
+router.use(
+  '/api/images',
+  Express.static(Path.join(__dirname, '../../../upload'))
+)
 
 const fs = require('fs')
 

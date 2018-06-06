@@ -4,8 +4,11 @@ const close = ({ dispatch }) => {
   dispatch('setValue', false)
 }
 
-const open = ({ commit }, { address, code, id, name, phone, taxCode } = {}) => {
-  commit(types.open, { address, code, id, name, phone, taxCode })
+const open = (
+  { commit },
+  { address, avatar, code, id, name, phone, taxCode } = {}
+) => {
+  commit(types.open, { address, avatar, code, id, name, phone, taxCode })
 }
 
 const reset = ({ commit }) => {
@@ -14,6 +17,10 @@ const reset = ({ commit }) => {
 
 const setAddress = ({ commit }, value) => {
   commit(types.setAddress, value)
+}
+
+const setAvatar = ({ commit }, value) => {
+  commit(types.setAvatar, value)
 }
 
 const setCode = ({ commit }, value) => {
@@ -45,6 +52,7 @@ export default {
   open,
   reset,
   setAddress,
+  setAvatar,
   setCode,
   setName,
   setPhone,

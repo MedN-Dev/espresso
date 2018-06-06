@@ -1,9 +1,13 @@
 import types from '@/store/types'
 
 export default {
-  [types.open] (state, { address, code, id, name, phone, taxCode } = {}) {
+  [types.open] (
+    state,
+    { address, avatar, code, id, name, phone, taxCode } = {}
+  ) {
     if (id == null) {
       state.address = state._address = null
+      state.avatar = state._avatar = null
       state.code = state._code = null
       state.id = null
       state.name = state._name = null
@@ -12,6 +16,7 @@ export default {
       state.taxCode = state._taxCode = null
     } else {
       state.address = state._address = address
+      state.avatar = state._avatar = avatar
       state.code = state._code = code
       state.id = id
       state.name = state._name = name
@@ -23,6 +28,7 @@ export default {
   },
   [types.reset] (state) {
     state.address = state._address
+    state.avatar = state._avatar
     state.code = state._code
     state.name = state._name
     state.phone = state._phone
@@ -31,6 +37,9 @@ export default {
   },
   [types.setAddress] (state, payload) {
     state.address = payload
+  },
+  [types.setAvatar] (state, payload) {
+    state.avatar = payload
   },
   [types.setCode] (state, payload) {
     state.code = payload

@@ -9,7 +9,16 @@ const accountings = {
 
 const companies = {
   name: 'companies',
-  fields: ['id', 'code', 'name', 'address', 'phone', 'tax_code', 'active']
+  fields: [
+    'id',
+    'code',
+    'name',
+    'address',
+    'phone',
+    'tax_code',
+    'avatar',
+    'active'
+  ]
 }
 
 const customers = {

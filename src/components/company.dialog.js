@@ -1,6 +1,10 @@
 import _ from 'lodash'
 import { mapActions } from 'vuex'
+import eInputFile from '@/components/input-file'
 export default {
+  components: {
+    eInputFile
+  },
   computed: {
     address: {
       get () {
@@ -8,6 +12,14 @@ export default {
       },
       set (value) {
         this.setAddress(value)
+      }
+    },
+    avatar: {
+      get () {
+        return this.$store.state.CompanyDialog.avatar
+      },
+      set (value) {
+        this.setAvatar(value)
       }
     },
     code: {
@@ -83,6 +95,7 @@ export default {
       close: 'close',
       reset: 'reset',
       setAddress: 'setAddress',
+      setAvatar: 'setAvatar',
       setCode: 'setCode',
       setName: 'setName',
       setPhone: 'setPhone',
@@ -99,6 +112,13 @@ export default {
       showFailure: 'showFailure',
       showSuccess: 'showSuccess'
     }),
+    onAvatarReset () {
+      const URL = window.URL || window.webkitURL
+      if (URL && URL.createObjectURL) {
+        URL.revokeObjectURL(this.preview)
+      }
+      this.preview = null
+    },
     async onDelete () {
       const row = await this.delete(this.id)
       if (row != null) {
@@ -108,17 +128,38 @@ export default {
         this.showFailure(this.$t('INPUT_INVALID'))
       }
     },
+    onFileChange (file) {
+      const URL = window.URL || window.webkitURL
+      if (URL && URL.createObjectURL) {
+        this.preview = URL.createObjectURL(file)
+      }
+      this.file = file
+    },
     onReset () {
       this.$refs.form.reset()
       this.reset()
     },
     async onSubmit () {
+      if (!this.$refs.form.validate()) {
+        return
+      }
+      if (this.file) {
+        this.upload = true
+      } else {
+        this.submit()
+      }
+    },
+    onUploadSuccess (filename) {
+      this.avatar = filename
+      this.submit().then(() => {
+        this.onAvatarReset()
+      })
+    },
+    async submit () {
       try {
-        if (!this.$refs.form.validate()) {
-          return
-        }
         const payload = {
           address: this.address,
+          avatar: this.avatar,
           code: this.code,
           prototypeId: this.prototypeId,
           name: this.name,
@@ -145,28 +186,13 @@ export default {
         this.showFailure(this.$t('INPUT_INVALID'))
         console.log(`${err.name}: ${err.message}`)
       }
-    },
-
-    inputFilter (newFile, oldFile, prevent) {
-      if (newFile && !oldFile) {
-        if (!/\.(gif|jpg|jpeg|png|webp)$/i.test(newFile.name)) {
-          this.showFailure(this.$t('YOUR_CHOICE_IS_NOT_A_PICTURE'))
-          return prevent()
-        }
-      }
-      if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
-        newFile.url = ''
-        let URL = window.URL || window.webkitURL
-        if (URL && URL.createObjectURL) {
-          newFile.url = URL.createObjectURL(newFile.file)
-        }
-        this.$refs.upload.active = true
-      }
     }
   },
   data () {
     return {
-      files: []
+      file: null,
+      preview: null,
+      upload: false
     }
   }
 }

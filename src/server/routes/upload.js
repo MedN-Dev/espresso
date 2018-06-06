@@ -4,7 +4,7 @@ const Multer = require('multer')
 const upload = Multer({ dest: __dirname + '/../../../upload/' })
 
 const router = Express.Router()
-router.post('/', upload.single('avatar'), (req, res) => {
+router.post('/', upload.single('image'), (req, res) => {
   try {
     if (!req.file) {
       throw new Error('No file received')

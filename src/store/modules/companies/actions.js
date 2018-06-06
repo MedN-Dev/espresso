@@ -38,11 +38,12 @@ const getActive = async ({ commit }) => {
 
 const insert = async (
   { commit },
-  { address, code, name, phone, prototypeId, taxCode }
+  { address, avatar, code, name, phone, prototypeId, taxCode }
 ) => {
   try {
     const { data } = await Axios.post(endpoints.api.companies, {
       address,
+      avatar,
       code,
       name,
       phone,
@@ -72,11 +73,12 @@ const setActive = async ({ commit }, id) => {
 
 const update = async (
   { commit },
-  { address, code, id, name, phone, taxCode }
+  { address, avatar, code, id, name, phone, taxCode }
 ) => {
   try {
     const { data } = await Axios.patch(endpoints.api.companies + '/' + id, {
       address,
+      avatar,
       code,
       name,
       phone,

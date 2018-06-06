@@ -4,6 +4,7 @@ import mutations from './mutations'
 
 const state = {
   address: null,
+  avatar: null,
   code: null,
   id: null,
   prototypeId: null,
@@ -12,6 +13,7 @@ const state = {
   taxCode: null,
   value: false,
   _address: null,
+  _avatar: null,
   _code: null,
   _name: null,
   _phone: null,
